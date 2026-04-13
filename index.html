@@ -58,6 +58,19 @@ body{
   overflow-x:hidden;cursor:none;
 }
 
+.cosmos-video-wrap{
+  position:fixed;inset:0;z-index:-3;overflow:hidden;pointer-events:none;
+}
+.cosmos-video{
+  width:100%;height:100%;object-fit:cover;opacity:.34;filter:saturate(1.1) contrast(1.05) brightness(.55);
+}
+.cosmos-tint{
+  position:absolute;inset:0;
+  background:radial-gradient(circle at 20% 15%,rgba(136,80,255,.28) 0%,transparent 45%),
+             radial-gradient(circle at 80% 80%,rgba(40,200,232,.2) 0%,transparent 52%),
+             linear-gradient(180deg,rgba(5,5,8,.72) 0%,rgba(8,8,10,.84) 100%);
+}
+
 @media(hover:none){body{cursor:auto;}}
 ::selection{background:var(--lime);color:#0b0b09;}
 ::-webkit-scrollbar{width:2px;}
@@ -259,7 +272,11 @@ h2.sh2 em{font-family:var(--ff-s);font-style:italic;font-weight:400;color:var(--
 }
 .hero-bio strong{color:var(--ink);font-weight:600;}
 
-.hero-btns{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:44px;}
+.hero-btns{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;}
+
+.pos-strip{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:26px;}
+.pos-chip{font-family:var(--ff-m);font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:20px;border:1px solid var(--bdr2);color:var(--ink2);background:var(--surf2);}
+.pos-chip.strong{border-color:rgba(182,240,48,.3);color:var(--lime);background:var(--la);}
 
 /* Stats row */
 .stats-row{display:flex;gap:0;border:1px solid var(--bdr);border-radius:8px;overflow:hidden;}
@@ -824,6 +841,11 @@ footer{
 }
 footer span{font-family:var(--ff-m);font-size:9.5px;color:var(--ink3);letter-spacing:.06em;}
 
+@media (prefers-reduced-motion: reduce){
+  .cosmos-video,.nebula,.ticker-tr,.pulse,.avail-dot,.cap-bar,.ec-bar{animation:none!important;}
+  .rv{transition:none;}
+}
+
 /* ─── RESPONSIVE ───────────────────────────────── */
 @media(max-width:820px){
   .hero{grid-template-columns:1fr;max-width:100%;}
@@ -866,6 +888,12 @@ footer span{font-family:var(--ff-m);font-size:9.5px;color:var(--ink3);letter-spa
 
 <div id="c1"></div>
 <div id="c2"></div>
+<div class="cosmos-video-wrap" aria-hidden="true">
+  <video class="cosmos-video" autoplay loop muted playsinline preload="metadata" poster="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=1200&auto=format&fit=crop">
+    <source src="https://cdn.coverr.co/videos/coverr-earth-from-space-1579/1080p.mp4" type="video/mp4">
+  </video>
+  <div class="cosmos-tint"></div>
+</div>
 <div class="nebula nb1"></div>
 <div class="nebula nb2"></div>
 <div class="nebula nb3"></div>
@@ -896,7 +924,7 @@ footer span{font-family:var(--ff-m);font-size:9.5px;color:var(--ink3);letter-spa
 <div class="pg on" id="pg-home">
 
   <!-- Galaxy canvas background -->
-  <canvas id="galaxy" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.65;"></canvas>
+  <canvas id="galaxy" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.38;"></canvas>
 
   <!-- Hero -->
   <section class="hero" style="position:relative;z-index:1;">
@@ -913,7 +941,7 @@ footer span{font-family:var(--ff-m);font-size:9.5px;color:var(--ink3);letter-spa
       </h1>
 
       <!-- Punchy positioning line -->
-      <p class="hero-line rv d1">AI &amp; Content Operations professional — I build workflows, train models, and grow audiences.</p>
+      <p class="hero-line rv d1">AI Operations + Content Systems specialist — translating execution-heavy freelance wins into scalable full-time impact.</p>
 
       <!-- Typewriter role cycling -->
       <div class="typewriter-wrap rv d2">
@@ -925,13 +953,20 @@ footer span{font-family:var(--ff-m);font-size:9.5px;color:var(--ink3);letter-spa
         <strong>2+ years of hands-on delivery</strong> across LLM training, prompt engineering,
         multilingual data QA, SEO content ops, and multi-channel marketing execution —
         embedded in remote-first teams across the <strong>US, UK, India & Singapore</strong>.
-        Actively seeking: AI Ops | Content Operations | Growth & Marketing Ops — Remote preferred.
+        Positioning for full-time roles where AI operations, content systems, and growth execution meet — remote-first teams preferred.
       </p>
 
       <div class="hero-btns rv d3">
         <button class="btn btn-lime" onclick="gp('cs')">Case Studies →</button>
         <a href="https://drive.google.com/file/d/1f-Iu-UyHykNW5Ht3FU0lSNzNaH-fg8QZ/view" target="_blank" class="btn btn-ghost">↓ Download CV</a>
         <button class="btn btn-ghost" onclick="gp('ct')">Contact</button>
+      </div>
+
+      <div class="pos-strip rv d3">
+        <span class="pos-chip strong">Now positioning for full-time scope</span>
+        <span class="pos-chip">AI Ops + LLM Quality</span>
+        <span class="pos-chip">Content Ops + SEO Systems</span>
+        <span class="pos-chip">GTM / Growth Execution</span>
       </div>
 
       <div class="stats-row rv d4">
@@ -973,7 +1008,7 @@ footer span{font-family:var(--ff-m);font-size:9.5px;color:var(--ink3);letter-spa
           <p>I'm an <strong>AI & Content Operations professional</strong> with 2+ years of hands-on delivery across LLM training, prompt engineering, multilingual data QA, SEO content operations, and multi-channel marketing execution — embedded in remote-first teams across four countries.</p>
           <p>My background is deliberately multi-track: <strong>LLM training and prompt engineering</strong> at Outlier, Labelbox, and LXT; <strong>multilingual data annotation and QA</strong> for Uber and Andovar; <strong>SEO content operations</strong> at Inventiva; and <strong>marketing execution and ops</strong> at VenturX Capital — all within the same 2-year window.</p>
           <p>At Figmenta I gained exposure to <span class="ab-hl">GTM outbound work</span> — lead research, data enrichment, and outreach via Clay, Instantly, and Waalaxy — alongside product analysis, AEO research, and AI workflow building. I'm now developing this GTM layer further.</p>
-          <p>I have built this experience through <strong>short-term, project-based engagements</strong> — a deliberate strategy to gain rapid cross-functional exposure. My target is a <strong>full-time, long-term role</strong> in AI operations, content strategy, or growth.</p>
+          <p>I have built this experience through <strong>short-term, project-based engagements</strong> — a deliberate strategy to gain rapid cross-functional exposure. My next step is a <strong>full-time, long-term role</strong> where this blended delivery track is converted into ownership: AI quality systems, content operations, and growth execution across one product or business line.</p>
         </div>
 
         <div class="rv d1">
@@ -982,7 +1017,7 @@ footer span{font-family:var(--ff-m);font-size:9.5px;color:var(--ink3);letter-spa
             <div class="fc"><div class="fc-k">Experience</div><div class="fc-v">2+ years</div></div>
             <div class="fc"><div class="fc-k">Education</div><div class="fc-v">BA Humanities · Kurukshetra U.</div></div>
             <div class="fc"><div class="fc-k">Current track</div><div class="fc-v">AI Ops + GTM + Content</div></div>
-            <div class="fc"><div class="fc-k">Target roles</div><div class="fc-v">Product · Growth · AI Ops</div></div>
+            <div class="fc"><div class="fc-k">Target roles</div><div class="fc-v">AI Ops · Content Systems · Growth Ops</div></div>
             <div class="fc"><div class="fc-k">LinkedIn</div><div class="fc-v"><a href="https://linkedin.com/in/bhupender-singh-bb3b46251" target="_blank">bhupender-singh ↗</a></div></div>
             <div class="fc"><div class="fc-k">Email</div><div class="fc-v"><a href="mailto:bhup.athlete03@gmail.com">bhup.athlete03@gmail.com</a></div></div>
             <div class="fc"><div class="fc-k">Phone</div><div class="fc-v">+91-99968-48167</div></div>
@@ -1946,7 +1981,7 @@ setInterval(()=>pdNav(1),4000);
 
 /* ── Typewriter ─────────────────────── */
 (function(){
-  const roles=['AI & LLM Operations','Content & SEO Ops','Marketing Execution','Multilingual Prompt Engineering','GTM & Outbound Ops'];
+  const roles=['AI Ops & LLM Quality Systems','Content Operations & SEO Execution','Growth / GTM Workflow Execution','Multilingual Prompt Engineering','Cross-functional Remote Delivery'];
   let ri=0,ci=0,del=false;
   const el=document.getElementById('twText');
   if(!el)return;
