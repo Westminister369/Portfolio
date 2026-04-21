@@ -22,49 +22,50 @@
   --surf2:  #1d1d1a;
   --bdr:    #242420;
   --bdr2:   #2e2e28;
-
   --ink:    #e6e2d6;
   --ink2:   #9e9888;
   --ink3:   #5a5650;
-
   --lime:   #b6f030;
   --orange: #ff5228;
   --sky:    #28c8e8;
   --violet: #8850ff;
   --gold:   #f5a600;
   --coral:  #ff3358;
-
   --la: rgba(182,240,48,.1);
   --oa: rgba(255,82,40,.1);
   --sa: rgba(40,200,232,.1);
   --va: rgba(136,80,255,.1);
-
   --ff-d:'Inter',sans-serif;
   --ff-h:'Bebas Neue',sans-serif;
   --ff-s:'Lora',serif;
   --ff-m:'JetBrains Mono',monospace;
-
   --W:1040px;
   --pad:clamp(18px,4vw,52px);
   --r:5px;
 }
-
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
-
 body{
   background:var(--bg);color:var(--ink);
   font-family:var(--ff-d);font-size:15.5px;line-height:1.8;
   overflow-x:hidden;cursor:none;
 }
 
-.bg{
-  background:url(https://i.ibb.co/87GbbFP/2799006.jpg) no-repeat center center fixed;
-  background-size:cover;position:fixed;inset:0;z-index:-3;
+/* Video background (base layer) */
+.cosmos-video-wrap{
+  position:fixed;inset:0;z-index:-3;overflow:hidden;pointer-events:none;
 }
-.bg:before{
-  content:"";position:fixed;inset:0;background:#000;opacity:.46;z-index:-1;
+.cosmos-video{
+  width:100%;height:100%;object-fit:cover;opacity:.34;filter:saturate(1.1) contrast(1.05) brightness(.55);
 }
+.cosmos-tint{
+  position:absolute;inset:0;
+  background:radial-gradient(circle at 20% 15%,rgba(136,80,255,.28) 0%,transparent 45%),
+             radial-gradient(circle at 80% 80%,rgba(40,200,232,.2) 0%,transparent 52%),
+             linear-gradient(180deg,rgba(5,5,8,.72) 0%,rgba(8,8,10,.84) 100%);
+}
+
+/* Star field (overlay layer) */
 .star-field{position:fixed;inset:0;perspective:600px;z-index:-2;pointer-events:none;overflow:hidden;}
 .star-field .layer{position:absolute;inset:-20%;background-repeat:repeat;border-radius:50%;}
 .star-field .layer:nth-child(1){background-image:radial-gradient(2px 2px at 20px 30px,#fff,transparent),radial-gradient(1px 1px at 160px 120px,#d9d9d9,transparent),radial-gradient(1px 1px at 70px 200px,#fff,transparent);background-size:220px 220px;animation:sf-fly-by-1 22s linear infinite;opacity:.45;}
@@ -278,6 +279,9 @@ h2.sh2 em{font-family:var(--ff-s);font-style:italic;font-weight:400;color:var(--
 
 .hero-btns{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;}
 
+.pos-strip{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:26px;}
+.pos-chip{font-family:var(--ff-m);font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:20px;border:1px solid var(--bdr2);color:var(--ink2);background:var(--surf2);}
+.pos-chip.strong{border-color:rgba(182,240,48,.3);color:var(--lime);background:var(--la);}
 
 /* Stats row */
 .stats-row{display:flex;gap:0;border:1px solid var(--bdr);border-radius:8px;overflow:hidden;}
@@ -848,7 +852,7 @@ footer{
 footer span{font-family:var(--ff-m);font-size:9.5px;color:var(--ink3);letter-spacing:.06em;}
 
 @media (prefers-reduced-motion: reduce){
-  .star-field .layer,.nebula,.ticker-tr,.pulse,.avail-dot,.cap-bar,.ec-bar{animation:none!important;}
+.cosmos-video,.star-field .layer,.nebula,.ticker-tr,.pulse,.avail-dot,.cap-bar,.ec-bar{animation:none!important;}
   .rv{transition:none;}
 }
 
@@ -899,7 +903,12 @@ footer span{font-family:var(--ff-m);font-size:9.5px;color:var(--ink3);letter-spa
 
 <div id="c1"></div>
 <div id="c2"></div>
-<div class="bg" aria-hidden="true"></div>
+<div class="cosmos-video-wrap" aria-hidden="true">
+  <video class="cosmos-video" autoplay loop muted playsinline preload="metadata" poster="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=1200&auto=format&fit=crop">
+    <source src="https://cdn.coverr.co/videos/coverr-earth-from-space-1579/1080p.mp4" type="video/mp4">
+  </video>
+  <div class="cosmos-tint"></div>
+</div>
 <div class="star-field" aria-hidden="true"><div class="layer"></div><div class="layer"></div><div class="layer"></div></div>
 <div class="nebula nb1"></div>
 <div class="nebula nb2"></div>
@@ -930,6 +939,8 @@ footer span{font-family:var(--ff-m);font-size:9.5px;color:var(--ink3);letter-spa
 <!-- ═══ HOME (includes About) ═════════════════════════════════ -->
 <div class="pg on" id="pg-home">
 
+<!-- Galaxy canvas background -->
+<canvas id="galaxy" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.38;"></canvas>
 
   <!-- Hero -->
   <section class="hero" style="position:relative;z-index:1;">
@@ -946,7 +957,7 @@ footer span{font-family:var(--ff-m);font-size:9.5px;color:var(--ink3);letter-spa
       </h1>
 
       <!-- Punchy positioning line -->
-      <p class="hero-line rv d1">AI & Prompt Engineering · SEO Content Operations · Marketing Operations</p>
+<p class="hero-line rv d1">AI Operations + Content Systems specialist — translating execution-heavy freelance wins into scalable full-time impact.</p>
 
       <!-- Typewriter role cycling -->
       <div class="typewriter-wrap rv d2">
@@ -958,15 +969,19 @@ footer span{font-family:var(--ff-m);font-size:9.5px;color:var(--ink3);letter-spa
         <strong>2+ years of hands-on delivery</strong> across LLM training, prompt engineering,
         multilingual data QA, SEO content ops, and multi-channel marketing execution —
         embedded in remote-first teams across the <strong>US, UK, India & Singapore</strong>.
-        Clear lanes: AI / LLM data operations, SEO content systems, and marketing execution with measurable outcomes across remote global teams.
+Positioning for full-time roles where AI operations, content systems, and growth execution meet — remote-first teams preferred.
       </p>
-
       <div class="hero-btns rv d3">
         <button class="btn btn-lime" onclick="gp('cs')">Case Studies →</button>
-        <a href="https://drive.google.com/file/d/1f-Iu-UyHykNW5Ht3FU0lSNzNaH-fg8QZ/view" target="_blank" class="btn btn-ghost">↓ Download CV</a>
+        <a href="https://drive.google.com/file/d/1Xm6Irh0U0nRqXrrk4q7sqOv8_10vgd1G/view?usp=sharing" target="_blank" class="btn btn-ghost">↓ Download CV</a>
         <button class="btn btn-ghost" onclick="gp('ct')">Contact</button>
       </div>
-
+      <div class="pos-strip rv d3">
+        <span class="pos-chip strong">Now positioning for full-time scope</span>
+        <span class="pos-chip">AI Ops + LLM Quality</span>
+        <span class="pos-chip">Content Ops + SEO Systems</span>
+        <span class="pos-chip">GTM / Growth Execution</span>
+      </div>
 
       <div class="stats-row rv d4">
         <div class="st"><div class="st-n c-ctr" data-target="783" data-suffix="%" style="color:var(--lime)">0%</div><div class="st-l">LinkedIn Growth</div></div>
@@ -1007,16 +1022,15 @@ footer span{font-family:var(--ff-m);font-size:9.5px;color:var(--ink3);letter-spa
           <p>I'm an <strong>AI & Content Operations professional</strong> with 2+ years of hands-on delivery across LLM training, prompt engineering, multilingual data QA, SEO content operations, and multi-channel marketing execution — embedded in remote-first teams across four countries.</p>
           <p>My background is deliberately multi-track: <strong>LLM training and prompt engineering</strong> at Outlier, Labelbox, and LXT; <strong>multilingual data annotation and QA</strong> for Uber and Andovar; <strong>SEO content operations</strong> at Inventiva; and <strong>marketing execution and ops</strong> at VenturX Capital — all within the same 2-year window.</p>
           <p>At Figmenta I gained exposure to <span class="ab-hl">GTM outbound work</span> — lead research, data enrichment, and outreach via Clay, Instantly, and Waalaxy — alongside product analysis, AEO research, and AI workflow building. I'm now developing this GTM layer further.</p>
-          <p>I have built this experience through <strong>short-term, project-based engagements</strong> — a deliberate strategy to gain rapid cross-functional exposure. I bring a blended track across AI model operations, content systems, and marketing execution — and now focus on roles where these three lanes work together for consistent business outcomes.</p>
+<p>I have built this experience through <strong>short-term, project-based engagements</strong> — a deliberate strategy to gain rapid cross-functional exposure. My next step is a <strong>full-time, long-term role</strong> where this blended delivery track is converted into ownership: AI quality systems, content operations, and growth execution across one product or business line.</p>
         </div>
-
         <div class="rv d1">
           <div class="facts">
             <div class="fc"><div class="fc-k">Location</div><div class="fc-v">Kaithal, Haryana · Remote</div></div>
             <div class="fc"><div class="fc-k">Experience</div><div class="fc-v">2+ years</div></div>
             <div class="fc"><div class="fc-k">Education</div><div class="fc-v">BA Humanities · Kurukshetra U.</div></div>
-            <div class="fc"><div class="fc-k">Current track</div><div class="fc-v">AI + Prompt + Content Ops</div></div>
-            <div class="fc"><div class="fc-k">Target roles</div><div class="fc-v">AI Ops · Prompt Engg · Content/Marketing Ops</div></div>
+            <div class="fc"><div class="fc-k">Current track</div><div class="fc-v">AI Ops + GTM + Content</div></div>
+            <div class="fc"><div class="fc-k">Target roles</div><div class="fc-v">AI Ops · Content Systems · Growth Ops</div></div>
             <div class="fc"><div class="fc-k">LinkedIn</div><div class="fc-v"><a href="https://linkedin.com/in/bhupender-singh-bb3b46251" target="_blank">bhupender-singh ↗</a></div></div>
             <div class="fc"><div class="fc-k">Email</div><div class="fc-v"><a href="mailto:bhup.athlete03@gmail.com">bhup.athlete03@gmail.com</a></div></div>
             <div class="fc"><div class="fc-k">Phone</div><div class="fc-v">+91-99968-48167</div></div>
@@ -1856,7 +1870,7 @@ footer span{font-family:var(--ff-m);font-size:9.5px;color:var(--ink3);letter-spa
     <div class="ct-links rv">
       <a href="mailto:bhup.athlete03@gmail.com" class="cl cl-lime">✉ Email Me</a>
       <a href="https://www.linkedin.com/in/bhupender-singh-bb3b46251" target="_blank" class="cl cl-out cl-sky">in LinkedIn</a>
-      <a href="https://drive.google.com/file/d/1f-Iu-UyHykNW5Ht3FU0lSNzNaH-fg8QZ/view" target="_blank" class="cl cl-out cl-org">↓ Download CV</a>
+      <a href="https://drive.google.com/file/d/1Xm6Irh0U0nRqXrrk4q7sqOv8_10vgd1G/view?usp=sharing" target="_blank" class="cl cl-out cl-org">↓ Download CV</a>
     </div>
 
     <p class="ct-reply rv">⏱ I typically reply within 24 hours.</p>
@@ -1990,7 +2004,7 @@ setInterval(()=>pdNav(1),4000);
 
 /* ── Typewriter ─────────────────────── */
 (function(){
-  const roles=['AI & Prompt Engineering','SEO Content Operations','Marketing Ops & Analytics','Multilingual Data QA (EN/HI/PA)','Cross-functional Remote Execution'];
+const roles=['AI Ops & LLM Quality Systems','Content Operations & SEO Execution','Growth / GTM Workflow Execution','Multilingual Prompt Engineering','Cross-functional Remote Delivery'];
   let ri=0,ci=0,del=false;
   const el=document.getElementById('twText');
   if(!el)return;
