@@ -12,7 +12,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="description" content="Portfolio of Bhupender Singh — AI & Content Operations Specialist with 2+ years across LLM training, SEO, and marketing ops.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&family=Lora:ital@1&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=Lora:ital@1&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
 <style>
 /* ─── TOKENS ───────────────────────────────────── */
 :root{
@@ -22,42 +22,36 @@
   --surf2:  #1d1d1a;
   --bdr:    #242420;
   --bdr2:   #2e2e28;
-
   --ink:    #e6e2d6;
   --ink2:   #9e9888;
   --ink3:   #5a5650;
-
   --lime:   #b6f030;
   --orange: #ff5228;
   --sky:    #28c8e8;
   --violet: #8850ff;
   --gold:   #f5a600;
   --coral:  #ff3358;
-
   --la: rgba(182,240,48,.1);
   --oa: rgba(255,82,40,.1);
   --sa: rgba(40,200,232,.1);
   --va: rgba(136,80,255,.1);
-
-  --ff-d:'Outfit',sans-serif;
+  --ff-d:'Inter',sans-serif;
   --ff-h:'Bebas Neue',sans-serif;
   --ff-s:'Lora',serif;
   --ff-m:'JetBrains Mono',monospace;
-
   --W:1040px;
   --pad:clamp(18px,4vw,52px);
   --r:5px;
 }
-
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
-
 body{
   background:var(--bg);color:var(--ink);
-  font-family:var(--ff-d);font-size:14px;line-height:1.7;
+  font-family:var(--ff-d);font-size:15.5px;line-height:1.8;
   overflow-x:hidden;cursor:none;
 }
 
+/* Video background (base layer) */
 .cosmos-video-wrap{
   position:fixed;inset:0;z-index:-3;overflow:hidden;pointer-events:none;
 }
@@ -70,6 +64,16 @@ body{
              radial-gradient(circle at 80% 80%,rgba(40,200,232,.2) 0%,transparent 52%),
              linear-gradient(180deg,rgba(5,5,8,.72) 0%,rgba(8,8,10,.84) 100%);
 }
+
+/* Star field (overlay layer) */
+.star-field{position:fixed;inset:0;perspective:600px;z-index:-2;pointer-events:none;overflow:hidden;}
+.star-field .layer{position:absolute;inset:-20%;background-repeat:repeat;border-radius:50%;}
+.star-field .layer:nth-child(1){background-image:radial-gradient(2px 2px at 20px 30px,#fff,transparent),radial-gradient(1px 1px at 160px 120px,#d9d9d9,transparent),radial-gradient(1px 1px at 70px 200px,#fff,transparent);background-size:220px 220px;animation:sf-fly-by-1 22s linear infinite;opacity:.45;}
+.star-field .layer:nth-child(2){background-image:radial-gradient(2px 2px at 40px 80px,#f2f2f2,transparent),radial-gradient(1px 1px at 190px 40px,#fff,transparent),radial-gradient(1px 1px at 120px 170px,#d6d6d6,transparent);background-size:260px 260px;animation:sf-fly-by-2 26s linear infinite;opacity:.35;}
+.star-field .layer:nth-child(3){background-image:radial-gradient(1px 1px at 60px 60px,#fff,transparent),radial-gradient(1px 1px at 140px 180px,#ededed,transparent),radial-gradient(2px 2px at 200px 90px,#fff,transparent);background-size:300px 300px;animation:sf-fly-by-3 30s linear infinite;opacity:.25;}
+@keyframes sf-fly-by-1{from{transform:translateZ(-600px) translateY(0)}to{transform:translateZ(0) translateY(120px)}}
+@keyframes sf-fly-by-2{from{transform:translateZ(-1200px) translateY(0)}to{transform:translateZ(-600px) translateY(220px)}}
+@keyframes sf-fly-by-3{from{transform:translateZ(-1800px) translateY(0)}to{transform:translateZ(-1200px) translateY(320px)}}
 
 @media(hover:none){body{cursor:auto;}}
 ::selection{background:var(--lime);color:#0b0b09;}
@@ -227,6 +231,7 @@ h2.sh2 em{font-family:var(--ff-s);font-style:italic;font-weight:400;color:var(--
   mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.7) 18%,black 40%,black 72%,transparent 100%);
   filter:saturate(1.15) contrast(1.05);
 }
+
 .hero-photo-glow{
   position:absolute;inset:0;border-radius:12px;
   background:radial-gradient(ellipse at 50% 30%,rgba(88,40,200,.22) 0%,transparent 70%),
@@ -419,6 +424,11 @@ h2.sh2 em{font-family:var(--ff-s);font-style:italic;font-weight:400;color:var(--
 .wi-tag{font-family:var(--ff-m);font-size:9px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px;}
 .wi-name{font-weight:700;font-size:13px;color:var(--ink);line-height:1.35;margin-bottom:4px;}
 .wi-desc{font-size:11.5px;color:var(--ink3);line-height:1.6;}
+
+.proof-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0 28px;}
+.proof-card{background:var(--surf);border:1px solid var(--bdr);border-radius:8px;padding:12px 14px;}
+.proof-n{font-family:var(--ff-h);font-size:24px;color:var(--lime);line-height:1;}
+.proof-l{font-family:var(--ff-m);font-size:9px;letter-spacing:.08em;color:var(--ink3);text-transform:uppercase;}
 
 /* Article rows */
 .art{
@@ -842,7 +852,7 @@ footer{
 footer span{font-family:var(--ff-m);font-size:9.5px;color:var(--ink3);letter-spacing:.06em;}
 
 @media (prefers-reduced-motion: reduce){
-  .cosmos-video,.nebula,.ticker-tr,.pulse,.avail-dot,.cap-bar,.ec-bar{animation:none!important;}
+.cosmos-video,.star-field .layer,.nebula,.ticker-tr,.pulse,.avail-dot,.cap-bar,.ec-bar{animation:none!important;}
   .rv{transition:none;}
 }
 
@@ -865,8 +875,12 @@ footer span{font-family:var(--ff-m);font-size:9.5px;color:var(--ink3);letter-spa
   .cs-2col{grid-template-columns:1fr;}
   .ec-row{grid-template-columns:160px 1fr;}
   .cap-row{grid-template-columns:150px 1fr 36px;}
+  .proof-grid{grid-template-columns:repeat(2,1fr);}
 }
 @media(max-width:560px){
+  body{font-size:14.5px;line-height:1.75;}
+  .hero-line{font-size:15px;}
+  .hero-bio{font-size:13.5px;}
   .pub-grid{grid-template-columns:1fr;}
   .pd-header{flex-direction:column;}
   .stats-row{flex-wrap:wrap;}
@@ -881,6 +895,7 @@ footer span{font-family:var(--ff-m);font-size:9.5px;color:var(--ink3);letter-spa
   .facts{grid-template-columns:1fr;}
   .cs-num{font-size:24px;}
   .about-grid{gap:28px;}
+  .proof-grid{grid-template-columns:1fr;}
 }
 </style>
 </head>
@@ -894,6 +909,7 @@ footer span{font-family:var(--ff-m);font-size:9.5px;color:var(--ink3);letter-spa
   </video>
   <div class="cosmos-tint"></div>
 </div>
+<div class="star-field" aria-hidden="true"><div class="layer"></div><div class="layer"></div><div class="layer"></div></div>
 <div class="nebula nb1"></div>
 <div class="nebula nb2"></div>
 <div class="nebula nb3"></div>
@@ -923,8 +939,8 @@ footer span{font-family:var(--ff-m);font-size:9.5px;color:var(--ink3);letter-spa
 <!-- ═══ HOME (includes About) ═════════════════════════════════ -->
 <div class="pg on" id="pg-home">
 
-  <!-- Galaxy canvas background -->
-  <canvas id="galaxy" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.38;"></canvas>
+<!-- Galaxy canvas background -->
+<canvas id="galaxy" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.38;"></canvas>
 
   <!-- Hero -->
   <section class="hero" style="position:relative;z-index:1;">
@@ -941,7 +957,7 @@ footer span{font-family:var(--ff-m);font-size:9.5px;color:var(--ink3);letter-spa
       </h1>
 
       <!-- Punchy positioning line -->
-      <p class="hero-line rv d1">AI Operations + Content Systems specialist — translating execution-heavy freelance wins into scalable full-time impact.</p>
+<p class="hero-line rv d1">AI Operations + Content Systems specialist — translating execution-heavy freelance wins into scalable full-time impact.</p>
 
       <!-- Typewriter role cycling -->
       <div class="typewriter-wrap rv d2">
@@ -953,15 +969,13 @@ footer span{font-family:var(--ff-m);font-size:9.5px;color:var(--ink3);letter-spa
         <strong>2+ years of hands-on delivery</strong> across LLM training, prompt engineering,
         multilingual data QA, SEO content ops, and multi-channel marketing execution —
         embedded in remote-first teams across the <strong>US, UK, India & Singapore</strong>.
-        Positioning for full-time roles where AI operations, content systems, and growth execution meet — remote-first teams preferred.
+Positioning for full-time roles where AI operations, content systems, and growth execution meet — remote-first teams preferred.
       </p>
-
       <div class="hero-btns rv d3">
         <button class="btn btn-lime" onclick="gp('cs')">Case Studies →</button>
         <a href="https://drive.google.com/file/d/1Xm6Irh0U0nRqXrrk4q7sqOv8_10vgd1G/view?usp=sharing" target="_blank" class="btn btn-ghost">↓ Download CV</a>
         <button class="btn btn-ghost" onclick="gp('ct')">Contact</button>
       </div>
-
       <div class="pos-strip rv d3">
         <span class="pos-chip strong">Now positioning for full-time scope</span>
         <span class="pos-chip">AI Ops + LLM Quality</span>
@@ -1008,9 +1022,8 @@ footer span{font-family:var(--ff-m);font-size:9.5px;color:var(--ink3);letter-spa
           <p>I'm an <strong>AI & Content Operations professional</strong> with 2+ years of hands-on delivery across LLM training, prompt engineering, multilingual data QA, SEO content operations, and multi-channel marketing execution — embedded in remote-first teams across four countries.</p>
           <p>My background is deliberately multi-track: <strong>LLM training and prompt engineering</strong> at Outlier, Labelbox, and LXT; <strong>multilingual data annotation and QA</strong> for Uber and Andovar; <strong>SEO content operations</strong> at Inventiva; and <strong>marketing execution and ops</strong> at VenturX Capital — all within the same 2-year window.</p>
           <p>At Figmenta I gained exposure to <span class="ab-hl">GTM outbound work</span> — lead research, data enrichment, and outreach via Clay, Instantly, and Waalaxy — alongside product analysis, AEO research, and AI workflow building. I'm now developing this GTM layer further.</p>
-          <p>I have built this experience through <strong>short-term, project-based engagements</strong> — a deliberate strategy to gain rapid cross-functional exposure. My next step is a <strong>full-time, long-term role</strong> where this blended delivery track is converted into ownership: AI quality systems, content operations, and growth execution across one product or business line.</p>
+<p>I have built this experience through <strong>short-term, project-based engagements</strong> — a deliberate strategy to gain rapid cross-functional exposure. My next step is a <strong>full-time, long-term role</strong> where this blended delivery track is converted into ownership: AI quality systems, content operations, and growth execution across one product or business line.</p>
         </div>
-
         <div class="rv d1">
           <div class="facts">
             <div class="fc"><div class="fc-k">Location</div><div class="fc-v">Kaithal, Haryana · Remote</div></div>
@@ -1062,7 +1075,7 @@ footer span{font-family:var(--ff-m);font-size:9.5px;color:var(--ink3);letter-spa
         <div class="cap-h">Capability Mix</div>
         <div class="cap-bars">
           <div class="cap-row">
-            <div class="cap-label">AI / LLM Operations</div>
+            <div class="cap-label">AI / Prompt Operations</div>
             <div class="cap-bar-wrap"><div class="cap-bar" style="--p:87%;--c:var(--violet)"></div></div>
             <div class="cap-pct">87%</div>
           </div>
@@ -1072,7 +1085,7 @@ footer span{font-family:var(--ff-m);font-size:9.5px;color:var(--ink3);letter-spa
             <div class="cap-pct">78%</div>
           </div>
           <div class="cap-row">
-            <div class="cap-label">Marketing & Growth</div>
+            <div class="cap-label">Marketing & Growth Ops</div>
             <div class="cap-bar-wrap"><div class="cap-bar" style="--p:66%;--c:var(--gold)"></div></div>
             <div class="cap-pct">66%</div>
           </div>
@@ -1098,7 +1111,14 @@ footer span{font-family:var(--ff-m);font-size:9.5px;color:var(--ink3);letter-spa
 <!-- ═══ EXPERIENCE ════════════════════════════════════════════ -->
 <div class="pg" id="pg-exp">
   <div class="sh sec">
-    <div class="rv"><div class="lbl">Career</div><h2 class="sh2">Work <em>Experience</em></h2></div>
+    <div class="rv"><div class="lbl">Career</div><h2 class="sh2">Work <em>Experience</em></h2><p style="color:var(--ink2);max-width:760px">Role-by-role context from the resume: scope, ownership, tools used, and measurable outcomes.</p></div>
+
+    <div class="proof-grid rv">
+      <div class="proof-card"><div class="proof-n">783.8%</div><div class="proof-l">LinkedIn growth</div></div>
+      <div class="proof-card"><div class="proof-n">10,000+</div><div class="proof-l">AI data points</div></div>
+      <div class="proof-card"><div class="proof-n">300+</div><div class="proof-l">Legal docs translated</div></div>
+      <div class="proof-card"><div class="proof-n">200+</div><div class="proof-l">SEO articles published</div></div>
+    </div>
 
     <!-- FIGMENTA -->
     <div class="exp-item rv">
@@ -1111,6 +1131,7 @@ footer span{font-family:var(--ff-m);font-size:9.5px;color:var(--ink3);letter-spa
       <div class="ex-r">
         <div class="ex-role">Content & QA Analyst <span class="ex-scope">(Internship — Fixed-term project contract)</span></div>
         <div class="ex-bar" style="background:linear-gradient(90deg,var(--lime),var(--sky))"></div>
+        <div class="ex-contract">Context: Fixed-term internship focused on content systems + QA + GTM support for active campaigns.</div>
         <ul class="ex-ul">
           <li><strong>Built AI-powered content workflows</strong> using GPT-4 and Claude, reducing manual production steps by automating SEO/AEO research pipelines and internal operational response drafts.</li>
           <li>Delivered end-to-end analytical outputs — <strong>product analysis, competitor benchmarking, GTM gap analysis</strong> — that directly informed two campaign launches.</li>
@@ -1136,6 +1157,7 @@ footer span{font-family:var(--ff-m);font-size:9.5px;color:var(--ink3);letter-spa
       <div class="ex-r">
         <div class="ex-role">Marketing Operations Analyst <span class="ex-scope">(Internship — 5-month project scope)</span></div>
         <div class="ex-bar" style="background:linear-gradient(90deg,var(--orange),var(--gold))"></div>
+        <div class="ex-contract">Context: Founder-support marketing role handling weekly content engine, performance reporting, and platform growth.</div>
         <ul class="ex-ul">
           <li><strong>783.8% LinkedIn engagement growth</strong> — 7,000+ impressions, 45+ hours cumulative watch time via a repeatable, design-led post framework. Zero paid promotion.</li>
           <li>Scaled YouTube to <strong>2,062 views, 30+ watch hours</strong> via retention-optimised editing, experimental thumbnails, and structured upload cadence.</li>
@@ -1234,6 +1256,7 @@ footer span{font-family:var(--ff-m);font-size:9.5px;color:var(--ink3);letter-spa
       <div class="ex-r">
         <div class="ex-role">AI & Prompt Engineering Specialist</div>
         <div class="ex-bar" style="background:linear-gradient(90deg,var(--violet),var(--sky))"></div>
+        <div class="ex-contract">Context: Project-based AI data operations across model evaluation, annotation QA, and multilingual prompt tasks.</div>
         <ul class="ex-ul">
           <li>Processed and validated <strong>10,000+ data points</strong> via Labelbox and V7 Labs; <strong>zero client-reported quality failures</strong> across all batches.</li>
           <li>Designed, tested, and iteratively refined <strong>LLM prompts across English, Hindi, and Punjabi</strong> — improving instruction-following accuracy and multilingual model adaptation.</li>
@@ -1280,7 +1303,7 @@ footer span{font-family:var(--ff-m);font-size:9.5px;color:var(--ink3);letter-spa
     <div class="rv"><div class="lbl">Portfolio</div><h2 class="sh2">Work <em>Collection</em></h2></div>
     <p class="rv" style="color:var(--ink2);font-size:13.5px;max-width:620px;line-height:1.8;margin-bottom:40px;">
       Deliverables from three roles — Figmenta (UK), VenturX Capital (NY), and AI training clients.
-      Notion archives contain the full documented work. Individual items below describe what each piece covers.
+      Notion archives contain full proof. Below is a cleaner guide to what each archive includes, so hiring teams can scan fast and click into evidence.
     </p>
 
     <!-- FIGMENTA -->
@@ -1981,7 +2004,7 @@ setInterval(()=>pdNav(1),4000);
 
 /* ── Typewriter ─────────────────────── */
 (function(){
-  const roles=['AI Ops & LLM Quality Systems','Content Operations & SEO Execution','Growth / GTM Workflow Execution','Multilingual Prompt Engineering','Cross-functional Remote Delivery'];
+const roles=['AI Ops & LLM Quality Systems','Content Operations & SEO Execution','Growth / GTM Workflow Execution','Multilingual Prompt Engineering','Cross-functional Remote Delivery'];
   let ri=0,ci=0,del=false;
   const el=document.getElementById('twText');
   if(!el)return;
