@@ -246,6 +246,10 @@ h2.sh2 em{font-family:var(--ff-s);font-style:italic;font-weight:400;color:var(--
   max-width:500px;margin-bottom:30px;
 }
 .hero-bio strong{color:var(--ink);font-weight:600;}
+.hero-points{list-style:none;display:flex;flex-direction:column;gap:6px;margin:0 0 26px;max-width:650px;}
+.hero-points li{font-size:13.5px;color:var(--ink2);line-height:1.7;padding-left:18px;position:relative;}
+.hero-points li::before{content:'→';position:absolute;left:0;color:var(--lime);font-family:var(--ff-m);}
+.hero-points strong{color:var(--ink);font-weight:600;}
 
 .hero-btns{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;}
 
@@ -302,6 +306,12 @@ h2.sh2 em{font-family:var(--ff-s);font-style:italic;font-weight:400;color:var(--
 .lc:hover{border-color:var(--sky);transform:translateY(-2px);}
 .lc-n{font-weight:700;font-size:14px;color:var(--ink);margin-bottom:2px;}
 .lc-l{font-family:var(--ff-m);font-size:9px;color:var(--ink3);letter-spacing:.1em;}
+
+.proof-mini{margin-top:24px;border:1px solid var(--bdr);border-radius:8px;overflow:hidden;}
+.proof-mini-h{padding:10px 14px;background:var(--surf2);border-bottom:1px solid var(--bdr);font-family:var(--ff-m);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);}
+.proof-mini ul{list-style:none;padding:12px 14px;display:flex;flex-direction:column;gap:9px;}
+.proof-mini li{font-size:12px;color:var(--ink2);line-height:1.65;}
+.proof-mini a{color:var(--lime);text-decoration:none;}
 
 /* ═══════════════════════════════════════════════
    EXPERIENCE
@@ -907,29 +917,31 @@ footer span{font-family:var(--ff-m);font-size:9.5px;color:var(--ink3);letter-spa
       <!-- Punchy positioning line -->
 <p class="hero-line rv d1">AI operations and content systems specialist focused on turning freelance delivery into repeatable, full-time team impact.</p>
 
-      <!-- Typewriter role cycling -->
-      <div class="typewriter-wrap rv d2">
-        <span class="tw-prefix">Currently specialising in&nbsp;</span>
-        <span class="tw-text" id="twText"></span><span class="tw-cursor">|</span>
-      </div>
+<!-- Typewriter role cycling -->
+<div class="typewriter-wrap rv d2">
+  <span class="tw-prefix">Currently specialising in&nbsp;</span>
+  <span class="tw-text" id="twText"></span><span class="tw-cursor">|</span>
+</div>
 
-      <p class="hero-bio rv d2">
-        <strong>2+ years of hands-on delivery</strong> across LLM training, prompt engineering,
-        multilingual data QA, SEO content ops, and multi-channel marketing execution —
-        embedded in remote-first teams across the <strong>US, UK, India & Singapore</strong>.
-Currently targeting full-time roles where AI operations, content systems, and growth execution overlap in remote-first teams.
-      </p>
-      <div class="hero-btns rv d3">
-        <button class="btn btn-lime" onclick="gp('cs')">Case Studies →</button>
-        <a href="https://drive.google.com/file/d/1Xm6Irh0U0nRqXrrk4q7sqOv8_10vgd1G/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">↓ Download CV</a>
-        <button class="btn btn-ghost" onclick="gp('ct')">Contact</button>
-      </div>
-      <div class="pos-strip rv d3">
-        <span class="pos-chip strong">Now positioning for full-time scope</span>
-        <span class="pos-chip">AI Ops + LLM Quality</span>
-        <span class="pos-chip">Content Ops + SEO Systems</span>
-        <span class="pos-chip">GTM / Growth Execution</span>
-      </div>
+<p class="hero-bio rv d2"><strong>AI &amp; Content Operations Specialist: Bridging Data, Language &amp; SEO.</strong></p>
+<ul class="hero-points rv d2">
+  <li><strong>AI/Data QA &amp; Prompt Engineering:</strong> validated and improved <strong>10,000+ AI datapoints</strong> across multilingual workflows.</li>
+  <li><strong>SEO Content Operations:</strong> published <strong>200+ SEO articles</strong> and managed editorial execution end-to-end.</li>
+  <li><strong>Multilingual Content Ops:</strong> translated <strong>300+ legal/technical documents</strong> (Hindi, Punjabi, English).</li>
+  <li><strong>Engagement Growth:</strong> drove <strong>783.8% LinkedIn growth</strong> through systems-led content operations.</li>
+</ul>
+
+<div class="hero-btns rv d3">
+  <button class="btn btn-lime" onclick="gp('cs')">Case Studies →</button>
+  <a href="https://drive.google.com/file/d/1Xm6Irh0U0nRqXrrk4q7sqOv8_10vgd1G/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">↓ Download CV</a>
+  <button class="btn btn-ghost" onclick="gp('ct')">Contact</button>
+</div>
+<div class="pos-strip rv d3">
+  <span class="pos-chip strong">Now positioning for full-time scope</span>
+  <span class="pos-chip">AI Ops + LLM Quality</span>
+  <span class="pos-chip">Content Ops + SEO Systems</span>
+  <span class="pos-chip">GTM / Growth Execution</span>
+</div>
 
       <div class="stats-row rv d4">
         <div class="st"><div class="st-n c-ctr" data-target="783" data-suffix="%" style="color:var(--lime)">0%</div><div class="st-l">LinkedIn Growth</div></div>
@@ -962,10 +974,10 @@ Currently targeting full-time roles where AI operations, content systems, and gr
         <div class="ab-bio rv">
           <div class="lbl">About</div>
           <h2 class="sh2" style="margin-bottom:20px;">Who I <em>am</em></h2>
-          <p>I'm an <strong>AI & Content Operations professional</strong> with 2+ years of hands-on delivery across LLM training, prompt engineering, multilingual data QA, SEO content operations, and multi-channel marketing execution — embedded in remote-first teams across four countries.</p>
-          <p>My background is deliberately multi-track: <strong>LLM training and prompt engineering</strong> at Outlier, Labelbox, and LXT; <strong>multilingual data annotation and QA</strong> for Uber and Andovar; <strong>SEO content operations</strong> at Inventiva; and <strong>marketing execution and ops</strong> at VenturX Capital — all within the same 2-year window.</p>
-          <p>At Figmenta I gained exposure to <span class="ab-hl">GTM outbound work</span> — lead research, data enrichment, and outreach via Clay, Instantly, and Waalaxy — alongside product analysis, AEO research, and AI workflow building. I'm now developing this GTM layer further.</p>
-<p>I have built this experience through <strong>short-term, project-based engagements</strong> — a deliberate strategy to gain rapid cross-functional exposure. My next step is a <strong>full-time, long-term role</strong> where this blended delivery track is converted into ownership: AI quality systems, content operations, and growth execution across one product or business line.</p>
+          <p>I’m an <strong>AI & Content Operations specialist</strong> who turns scattered workflows into measurable systems across data, language, and growth.</p>
+          <p>I’ve worked across AI annotation and prompt evaluation, SEO production, multilingual documentation, and marketing operations for remote-first teams in the US, UK, India, and Singapore.</p>
+          <p>I use a practical mix of execution and structure — from <span class="ab-hl">entity clarity in AI search</span> to scalable content and reporting routines that teams can actually run every week.</p>
+          <p>Now seeking a full-time role where I can own and scale AI quality, content operations, and growth systems. <strong>Let’s connect.</strong></p>
         </div>
         <div class="rv d1">
           <div class="facts">
@@ -977,6 +989,14 @@ Currently targeting full-time roles where AI operations, content systems, and gr
             <div class="fc"><div class="fc-k">LinkedIn</div><div class="fc-v"><a href="https://linkedin.com/in/bhupender-singh-bb3b46251" target="_blank" rel="noopener noreferrer">bhupender-singh ↗</a></div></div>
             <div class="fc"><div class="fc-k">Email</div><div class="fc-v"><a href="mailto:bhup.athlete03@gmail.com">bhup.athlete03@gmail.com</a></div></div>
             <div class="fc"><div class="fc-k">Phone</div><div class="fc-v">+91-99968-48167</div></div>
+          </div>
+          <div class="proof-mini">
+            <div class="proof-mini-h">Projects & Proofs</div>
+            <ul>
+              <li><strong>200+ SEO articles</strong> at Inventiva — <a href="http://inventiva.co.in/author/bhupender/" target="_blank" rel="noopener noreferrer">sample publications ↗</a></li>
+              <li><strong>783.8% LinkedIn growth</strong> at VenturX — analytics case study in the Case Studies section.</li>
+              <li><strong>AI Operations archive</strong> — <a href="https://www.notion.so/AI-Portfolio-2024-214dc419e94a80b8bb64dfad70140483" target="_blank" rel="noopener noreferrer">project evidence ↗</a></li>
+            </ul>
           </div>
           <div class="lang-row">
             <div class="lc"><div class="lc-n">Hindi</div><div class="lc-l">Native</div></div>
