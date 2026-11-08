@@ -1,4 +1,4 @@
-import { ICONS } from "./icons.js";
+import { TOOLS, logoHTML } from "./tools.js";
 
 const $ = (s, el = document) => el.querySelector(s);
 const $$ = (s, el = document) => [...el.querySelectorAll(s)];
@@ -7,37 +7,10 @@ const finePointer = matchMedia("(hover: hover) and (pointer: fine)").matches;
 
 requestAnimationFrame(() => document.documentElement.classList.add("is-loaded"));
 
-/* ── Tools data (brand glyphs from Simple Icons; monograms where none exists) ── */
-const BRAND = {
-  claude: "#D97757", openai: "#111111", googlegemini: "#8E75B2", googlecolab: "#F9AB00",
-  notion: "#111111", airtable: "#18BFFF", googlesheets: "#34A853", slack: "#4A154B",
-  zoho: "#E42527", googleanalytics: "#E37400", looker: "#4285F4", wordpress: "#21759B",
-  sanity: "#F03E2F", googlesearchconsole: "#458CF5", semrush: "#FF642D", canva: "#00C4CC",
-  adobe: "#FF0000", figma: "#F24E1E", linkedin: "#0A66C2", youtube: "#FF0000",
-  github: "#181717", miro: "#FFD02F",
-};
-const TOOLS = [
-  ["claude", "Claude", "ai"], ["openai", "GPT-4o", "ai"], ["googlegemini", "Google AI Studio", "ai"],
-  ["googlecolab", "Google Colab", "ai"], ["#LB", "Labelbox", "ai"], ["#V7", "V7 Labs", "ai"],
-  ["#Co", "Copilot", "ai"],
-  ["#Cl", "Clay", "growth"], ["#In", "Instantly", "growth"], ["#Wa", "Waalaxy", "growth"],
-  ["linkedin", "LinkedIn", "growth"], ["youtube", "YouTube", "growth"], ["wordpress", "WordPress", "growth"],
-  ["sanity", "Sanity", "growth"], ["#RM", "Rank Math", "growth"], ["googlesearchconsole", "Search Console", "growth"],
-  ["semrush", "Semrush", "growth"],
-  ["googleanalytics", "GA4", "ops"], ["looker", "Looker Studio", "ops"], ["zoho", "Zoho CRM", "ops"],
-  ["notion", "Notion", "ops"], ["airtable", "Airtable", "ops"], ["googlesheets", "Google Sheets", "ops"],
-  ["#Xl", "Excel · M365", "ops"], ["slack", "Slack", "ops"], ["github", "GitHub", "ops"],
-  ["canva", "Canva", "design"], ["adobe", "Adobe CC", "design"], ["figma", "Figma", "design"], ["miro", "Miro", "design"],
-];
-const svgFor = (slug) => `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${ICONS[slug].p}"/></svg>`;
-
+/* ── Toolbox + marquee (logos from tools.js) ── */
 const tools = $("#tools");
 if (tools) {
-  tools.innerHTML = TOOLS.map(([slug, name, cat]) => {
-    const glyph = slug.startsWith("#") ? `<span class="mono" aria-hidden="true">${slug.slice(1)}</span>` : svgFor(slug);
-    const brand = BRAND[slug] ? ` style="--brand:${BRAND[slug]}"` : "";
-    return `<div class="tool" data-cat="${cat}"${brand}>${glyph}<span>${name}</span></div>`;
-  }).join("");
+  tools.innerHTML = TOOLS.map((t) => `<div class="tool" data-cat="${t.cat}">${logoHTML(t)}<span>${t.name}</span></div>`).join("");
   $$(".filters button").forEach((b) =>
     b.addEventListener("click", () => {
       $$(".filters button").forEach((x) => x.setAttribute("aria-pressed", x === b));
@@ -49,9 +22,7 @@ if (tools) {
 
 const marquee = $("#marquee");
 if (marquee) {
-  const items = TOOLS.filter(([s]) => !s.startsWith("#"))
-    .map(([slug, name]) => `<span class="marquee-item" style="--brand:${BRAND[slug]}">${svgFor(slug)}${name}</span>`)
-    .join("");
+  const items = TOOLS.map((t) => `<span class="marquee-item">${logoHTML(t)}${t.name}</span>`).join("");
   marquee.innerHTML = items + items.replace(/<span class="marquee-item"/g, '<span class="marquee-item" aria-hidden="true"');
 }
 
@@ -73,7 +44,12 @@ const onScroll = () => {
   if (!nav.classList.contains("is-open")) nav.classList.toggle("is-hidden", y > lastY && y > 400);
   lastY = y;
 };
-addEventListener("scroll", onScroll, { passive: true });
+let scrollQueued = false;
+addEventListener("scroll", () => {
+  if (scrollQueued) return;
+  scrollQueued = true;
+  requestAnimationFrame(() => { scrollQueued = false; onScroll(); });
+}, { passive: true });
 onScroll();
 
 const sections = $$("main section[id]");
@@ -182,17 +158,20 @@ if (finePointer && !reduced) {
   addEventListener("pointermove", (e) => {
     mx = e.clientX; my = e.clientY;
     ring.classList.add("is-on"); dot.classList.add("is-on");
-    dot.style.transform = `translate(${mx}px, ${my}px)`;
+    dot.style.transform = `translate3d(${mx}px, ${my}px, 0)`;
   }, { passive: true });
   document.addEventListener("pointerleave", () => { ring.classList.remove("is-on"); dot.classList.remove("is-on"); });
   document.addEventListener("pointerover", (e) => {
     ring.classList.toggle("is-link", !!e.target.closest("a, button, .tool, [data-tilt]"));
   });
-  (function loop() {
-    rx += (mx - rx) * 0.16; ry += (my - ry) * 0.16;
-    ring.style.transform = `translate(${rx}px, ${ry}px)`;
-    requestAnimationFrame(loop);
-  })();
+  // the ring eases toward the pointer; the loop sleeps once it has caught up
+  let ringRaf = 0;
+  const loop = () => {
+    rx += (mx - rx) * 0.2; ry += (my - ry) * 0.2;
+    ring.style.transform = `translate3d(${rx}px, ${ry}px, 0)`;
+    ringRaf = Math.abs(mx - rx) + Math.abs(my - ry) > 0.3 ? requestAnimationFrame(loop) : 0;
+  };
+  addEventListener("pointermove", () => { if (!ringRaf) ringRaf = requestAnimationFrame(loop); }, { passive: true });
 
   // Magnetic buttons
   $$("[data-magnetic]").forEach((el) => {
@@ -206,12 +185,19 @@ if (finePointer && !reduced) {
 
   // 3D tilt cards
   $$("[data-tilt]").forEach((el) => {
+    let q = false, ex = 0, ey = 0;
     el.addEventListener("pointermove", (e) => {
-      const r = el.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width - 0.5;
-      const y = (e.clientY - r.top) / r.height - 0.5;
-      el.style.transition = "box-shadow .45s, transform .12s linear";
-      el.style.transform = `perspective(900px) rotateX(${-y * 8}deg) rotateY(${x * 10}deg) translateY(-4px)`;
+      ex = e.clientX; ey = e.clientY;
+      if (q) return;
+      q = true;
+      requestAnimationFrame(() => {
+        q = false;
+        const r = el.getBoundingClientRect();
+        const x = (ex - r.left) / r.width - 0.5;
+        const y = (ey - r.top) / r.height - 0.5;
+        el.style.transition = "box-shadow .45s, transform .12s linear";
+        el.style.transform = `perspective(900px) rotateX(${-y * 8}deg) rotateY(${x * 10}deg) translateY(-4px)`;
+      });
     });
     el.addEventListener("pointerleave", () => {
       el.style.transition = "box-shadow .45s, transform .8s cubic-bezier(.2,.7,.2,1)";
@@ -222,11 +208,17 @@ if (finePointer && !reduced) {
   // Portrait parallax
   const portrait = $("[data-parallax] img");
   const plate = $("[data-parallax] .portrait-plate");
+  let px = 0, py = 0, pQueued = false;
   addEventListener("pointermove", (e) => {
     if (scrollY > innerHeight) return;
-    const x = e.clientX / innerWidth - 0.5, y = e.clientY / innerHeight - 0.5;
-    portrait.style.transform = `translate(${x * -14}px, ${y * -8}px)`;
-    plate.style.transform = `translate(${x * 10}px, ${y * 6}px)`;
+    px = e.clientX / innerWidth - 0.5; py = e.clientY / innerHeight - 0.5;
+    if (pQueued) return;
+    pQueued = true;
+    requestAnimationFrame(() => {
+      pQueued = false;
+      portrait.style.transform = `translate3d(${px * -14}px, ${py * -8}px, 0)`;
+      plate.style.transform = `translate3d(${px * 10}px, ${py * 6}px, 0)`;
+    });
   }, { passive: true });
 }
 
@@ -242,6 +234,11 @@ if (arches.length && !reduced) {
       a.style.setProperty("--y", `${(1 - p) * (40 + d * 30)}%`);
     });
   };
-  addEventListener("scroll", upd, { passive: true });
-  upd();
+  let archesOn = false, archQueued = false;
+  new IntersectionObserver(([e]) => { archesOn = e.isIntersecting; if (archesOn) upd(); }).observe(archWrap);
+  addEventListener("scroll", () => {
+    if (!archesOn || archQueued) return;
+    archQueued = true;
+    requestAnimationFrame(() => { archQueued = false; upd(); });
+  }, { passive: true });
 }
